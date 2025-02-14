@@ -3,10 +3,10 @@
 #include <string.h>
 #include <stdbool.h>
 
-void KMP(char* seq, char* pattern, int seq_len, int pattern_len) {
+void populateLPS(char* pattern, int pattern_len) {
 
   // Zero out LPS array
-  int LPS[pattern_len];   // do I need for loop to zero out?
+  int LPS[pattern_len];
   for (int i = 0; i < pattern_len; i++) {
     LPS[i] = 0;
   }
@@ -64,35 +64,35 @@ int main() {
   int seq_len = strlen(seq);
   int pattern_len = strlen(pattern);
 
-  KMP(seq, pattern, seq_len, pattern_len);
+  populateLPS(pattern, pattern_len);
 
   char* pattern2 = "AABCBA";
   int pattern2_len = strlen(pattern2);
-  KMP(seq, pattern2, seq_len, pattern2_len);
+  populateLPS(pattern2, pattern2_len);
 
   char* pattern3 = "ABCADABCAA";
   int pattern3_len = strlen(pattern3);
-  KMP(seq, pattern3, seq_len, pattern3_len);
+  populateLPS(pattern3, pattern3_len);
 
   char* pattern4 = "ABCADABCDA";
   int pattern4_len = strlen(pattern4);
-  KMP(seq, pattern4, seq_len, pattern4_len);
+  populateLPS(pattern4, pattern4_len);
 
   char* pattern5 = "ABCAAABCAA";
   int pattern5_len = strlen(pattern5);
-  KMP(seq, pattern5, seq_len, pattern5_len);
+  populateLPS(pattern5, pattern5_len);
 
   char* pattern6 = "ABCAAABCDA";
   int pattern6_len = strlen(pattern6);
-  KMP(seq, pattern6, seq_len, pattern6_len);
+  populateLPS(pattern6, pattern6_len);
 
   char* pattern7 = "ABCADABCAD";
   int pattern7_len = strlen(pattern7);
-  KMP(seq, pattern7, seq_len, pattern7_len);
+  populateLPS(pattern7, pattern7_len);
 
   char* pattern8 = "ABCADABCDA";
   int pattern8_len = strlen(pattern8);
-  KMP(seq, pattern8, seq_len, pattern8_len);
+  populateLPS(pattern8, pattern8_len);
   
   return 0;
 }
