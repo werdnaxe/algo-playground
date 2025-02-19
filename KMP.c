@@ -5,29 +5,30 @@
 
 void KMP(char* sequence, char* pattern, int sequence_len, int pattern_len, int LPS[]) {
 
-  for (int i = 0; i <= sequence_len - pattern_len; i++) {
-
-    int j = 0;
-    while (j < pattern_len) {
-      if (pattern[j] == sequence[i]) {   // match
-	j++;
+  int i = 0;
+  int j = 0;
+  int match = 0;
+  
+  while (i < sequence_len) {
+    if (pattern[j] == sequence[i]) {   // match
+      j++;
+      i++;
+      // Check for pattern match
+      if (j == pattern_len) {
+	match = i - pattern_len;
+	printf("Match found at index %d\n", match);
+	j = LPS[j-1];
+      }
+    } else {   // no match
+      if (j != 0) {
+	j = LPS[j-1];
+      } else {
 	i++;
-      } else {   // no match
-	if (j != 0) {
-	  j = LPS[j-1];
-	} else {
-	  i++;
-	}
       }
     }
-
-    // Match found
-    int match = i - pattern_len;
-    printf("Match found at %d\n", match);
-    //    i--;   // decrement i due to automatic incrementation at end of for loop
-    
   }
 }
+
 
 int* populateLPS(char* pattern, int pattern_len) {
 
