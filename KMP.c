@@ -3,6 +3,23 @@
 #include <string.h>
 #include <stdbool.h>
 
+void KMP(char* sequence, char* pattern, int sequence_len, int pattern_len) {
+
+  for (int i = 0; i <= sequence_len - pattern_len; i++) {
+
+    int j = i;
+    int k = i;
+    while (j < pattern_len) {
+      if (pattern[j] != sequence[k]) {
+	break;
+      } else {
+	k++;
+	j++;
+      }
+    
+  }
+}
+
 void populateLPS(char* pattern, int pattern_len) {
 
   // Zero out LPS array
@@ -53,6 +70,8 @@ void populateLPS(char* pattern, int pattern_len) {
     }
     
   }
+
+  printf("\n");
   
 }
 
