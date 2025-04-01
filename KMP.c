@@ -3,27 +3,37 @@
 #include <string.h>
 #include <stdbool.h>
 
-void KMP(char* sequence, char* pattern, int sequence_len, int pattern_len) {
+void KMP(char* sequence, char* pattern, int sequence_len, int pattern_len, int LPS[]) {
 
-  for (int i = 0; i <= sequence_len - pattern_len; i++) {
-
-    int j = i;
-    int k = i;
-    while (j < pattern_len) {
-      if (pattern[j] != sequence[k]) {
-	break;
-      } else {
-	k++;
-	j++;
+  int i = 0;
+  int j = 0;
+  int match = 0;
+  
+  while (i < sequence_len) {
+    if (pattern[j] == sequence[i]) {   // match
+      j++;
+      i++;
+      // Check for pattern match
+      if (j == pattern_len) {
+	match = i - pattern_len;
+	printf("Match found at index %d\n", match);
+	j = LPS[j-1];
       }
-    
+    } else {   // no match
+      if (j != 0) {
+	j = LPS[j-1];
+      } else {
+	i++;
+      }
+    }
   }
 }
 
-void populateLPS(char* pattern, int pattern_len) {
+
+int* populateLPS(char* pattern, int pattern_len) {
 
   // Zero out LPS array
-  int LPS[pattern_len];
+  int* LPS = malloc(pattern_len * sizeof(int));
   for (int i = 0; i < pattern_len; i++) {
     LPS[i] = 0;
   }
@@ -72,6 +82,8 @@ void populateLPS(char* pattern, int pattern_len) {
   }
 
   printf("\n");
+
+  return LPS;
   
 }
 
@@ -83,7 +95,8 @@ int main() {
   int seq_len = strlen(seq);
   int pattern_len = strlen(pattern);
 
-  populateLPS(pattern, pattern_len);
+  int* LPS = populateLPS(pattern, pattern_len);
+  KMP(seq, pattern, seq_len, pattern_len, LPS);
 
   char* pattern2 = "AABCBA";
   int pattern2_len = strlen(pattern2);
